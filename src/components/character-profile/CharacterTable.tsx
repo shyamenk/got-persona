@@ -44,7 +44,12 @@ function CharacterTable() {
       {loading ? (
         <Spinner />
       ) : (
-        <DataTable columns={columns} data={characters} />
+        <DataTable
+          columns={columns}
+          data={characters}
+          currentPage={currentPage}
+          setCurrentPage={setCurrentPage}
+        />
       )}
     </div>
   );
