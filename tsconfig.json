@@ -14,12 +14,12 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
-    "jsx": "react",
-    "baseUrl": "./src",
-    "paths": {
-      "@components/*": ["./src/components/*"],
-      "@lib/*": ["src/lib/*"]
-    }
+    "jsx": "react"
+    // "baseUrl": "./src",
+    // "paths": {
+    //   "@components/*": ["./src/components/*"],
+    //   "@lib/*": ["src/lib/*"]
+    // }
   },
   "include": ["src/**/*.js", "src/**/*.jsx", "src/**/*.ts", "src/**/*.tsx"]
 }
