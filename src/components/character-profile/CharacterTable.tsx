@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { guessAgeByName } from "../../lib/agifyApi";
+import { batchGuessAgeByNames } from "../../lib/agifyApi";
 import { fetchCharacters } from "../../lib/iceAndFireApi";
 import Spinner from "../ui/spinner";
 import { Character, Columns } from "./Columns";
 import { DataTable } from "./DataTable";
 
 const PAGE_SIZE = 10;
+const NAMES_BATCH_SIZE = 10;
 
 const apiCache: Record<number, Character[]> = {};
 const ageCache: Record<string, number | null> = {};
@@ -16,11 +17,21 @@ async function fetchCharacterData(page: number, pageSize: number) {
   } else {
     const response = await fetchCharacters(page, pageSize);
     const dataWithNames = response.filter((item: Character) => item.name);
+    console.log(dataWithNames);
 
-    const agePromises = dataWithNames.map(async (item: Character) => {
-      if (!ageCache[item.name]) {
-        const age = await guessAgeByName(item.name);
-        ageCache[item.name] = age;
+    const namesList = dataWithNames.map(
+      (item: Character) => item.name.split(" ")[0]
+    );
+
+    const namesBatches = [];
+    for (let i = 0; i < namesList.length; i += NAMES_BATCH_SIZE) {
+      namesBatches.push(namesList.slice(i, i + NAMES_BATCH_SIZE));
+    }
+
+    const agePromises = namesBatches.map(async (batch) => {
+      const ages = await batchGuessAgeByNames(batch);
+      for (let i = 0; i < batch.length; i++) {
+        ageCache[batch[i]] = ages[i];
       }
     });
 
@@ -28,7 +39,7 @@ async function fetchCharacterData(page: number, pageSize: number) {
 
     const charactersWithAge = dataWithNames.map((item: Character) => ({
       ...item,
-      age: ageCache[item.name],
+      age: ageCache[item.name.split(" ")[0]],
     }));
 
     apiCache[page] = charactersWithAge;

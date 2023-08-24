@@ -60,7 +60,6 @@ export function DataTable<TData, TValue>({
       setCurrentPage(currentPage - 1);
     }
   };
-  console.log(currentPage);
 
   const handleNextPage = () => {
     setCurrentPage(currentPage + 1);
@@ -79,12 +78,15 @@ export function DataTable<TData, TValue>({
       </div>
       <div className="rounded-md border">
         <Table>
-          <TableHeader>
+          <TableHeader className="rounded-md">
             {table.getHeaderGroups().map((headerGroup) => (
               <TableRow key={headerGroup.id}>
                 {headerGroup.headers.map((header) => {
                   return (
-                    <TableHead key={header.id}>
+                    <TableHead
+                      key={header.id}
+                      className="bg-gray-800 text-white"
+                    >
                       {header.isPlaceholder
                         ? null
                         : flexRender(
