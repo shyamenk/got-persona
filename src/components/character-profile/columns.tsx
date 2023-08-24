@@ -8,10 +8,10 @@ export type Character = {
   name: string;
   gender: string;
   culture: string;
-  url: string;
+  age: number;
 };
 
-export const columns: ColumnDef<Character>[] = [
+export const Columns: ColumnDef<Character>[] = [
   {
     accessorKey: "name",
     header: ({ column }) => {
@@ -41,5 +41,9 @@ export const columns: ColumnDef<Character>[] = [
   {
     accessorKey: "died",
     header: "Died",
+  },
+  {
+    accessorKey: "age",
+    header: "Age",
   },
 ];

@@ -1,14 +1,39 @@
 import React, { useEffect, useState } from "react";
+import { guessAgeByName } from "../../lib/agifyApi";
 import { fetchCharacters } from "../../lib/iceAndFireApi";
 import Spinner from "../ui/spinner";
-import { Character, columns } from "./columns";
-import { DataTable } from "./data-table";
+import { Character, Columns } from "./Columns";
+import { DataTable } from "./DataTable";
 
 const PAGE_SIZE = 10;
 
+const apiCache: Record<number, Character[]> = {};
+const ageCache: Record<string, number | null> = {};
+
 async function fetchCharacterData(page: number, pageSize: number) {
-  const response = await fetchCharacters(page, pageSize);
-  return response;
+  if (apiCache[page]) {
+    return apiCache[page];
+  } else {
+    const response = await fetchCharacters(page, pageSize);
+    const dataWithNames = response.filter((item: Character) => item.name);
+
+    const agePromises = dataWithNames.map(async (item: Character) => {
+      if (!ageCache[item.name]) {
+        const age = await guessAgeByName(item.name);
+        ageCache[item.name] = age;
+      }
+    });
+
+    await Promise.all(agePromises);
+
+    const charactersWithAge = dataWithNames.map((item: Character) => ({
+      ...item,
+      age: ageCache[item.name],
+    }));
+
+    apiCache[page] = charactersWithAge;
+    return charactersWithAge;
+  }
 }
 
 function CharacterTable() {
@@ -20,12 +45,9 @@ function CharacterTable() {
     async function fetchData() {
       try {
         setLoading(true);
-
         const data = await fetchCharacterData(currentPage, PAGE_SIZE);
-        const namedItems = data.filter((item: Character) => item.name);
-
-        if (namedItems.length === PAGE_SIZE) {
-          setCharacters(namedItems);
+        if (data.length === PAGE_SIZE) {
+          setCharacters(data);
         } else {
           setCurrentPage(currentPage + 1);
         }
@@ -45,7 +67,7 @@ function CharacterTable() {
         <Spinner />
       ) : (
         <DataTable
-          columns={columns}
+          columns={Columns}
           data={characters}
           currentPage={currentPage}
           setCurrentPage={setCurrentPage}
