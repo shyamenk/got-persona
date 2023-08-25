@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { batchGuessAgeByNames } from "../../lib/agifyApi";
 import { fetchCharacters } from "../../lib/iceAndFireApi";
 import Spinner from "../ui/spinner";
-import { Character, columns } from "./Columns";
+import { Character, Columns } from "./Columns";
 import { DataTable } from "./DataTable";
 
 const PAGE_SIZE = 10;
@@ -83,7 +83,7 @@ function CharacterTable() {
         <Spinner />
       ) : (
         <DataTable
-          columns={columns}
+          Columns={Columns}
           data={characters}
           currentPage={currentPage}
           setCurrentPage={setCurrentPage}

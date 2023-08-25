@@ -31,7 +31,7 @@ const createSortableColumn = (
   };
 };
 
-export const columns: ColumnDef<Character>[] = [
+export const Columns: ColumnDef<Character>[] = [
   createSortableColumn("name", "Name"),
   createSortableColumn("gender", "Gender"),
   createSortableColumn("culture", "Culture"),

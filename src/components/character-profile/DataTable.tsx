@@ -23,14 +23,14 @@ import {
 } from "../ui/table";
 
 interface DataTableProps<TData, TValue> {
-  columns: ColumnDef<TData, TValue>[];
+  Columns: ColumnDef<TData, TValue>[];
   data: TData[];
   setCurrentPage: Dispatch<SetStateAction<number>>;
   currentPage: number;
 }
 
 export function DataTable<TData, TValue>({
-  columns,
+  Columns: columns,
   data,
   setCurrentPage,
   currentPage,
