@@ -1,5 +1,5 @@
 import React from "react";
-import CharacterTable from "./character-profile/CharacterTable";
+import CharacterTable from "./profile/CharacterTable";
 
 const TableContainer = () => {
   return (
