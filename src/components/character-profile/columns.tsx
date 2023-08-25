@@ -13,7 +13,6 @@ export type Character = {
   age: number | null;
 };
 
-// Helper function to generate column definition
 const createSortableColumn = (
   accessorKey: keyof Character,
   label: string
@@ -32,7 +31,7 @@ const createSortableColumn = (
   };
 };
 
-export const Columns: ColumnDef<Character>[] = [
+export const columns: ColumnDef<Character>[] = [
   createSortableColumn("name", "Name"),
   createSortableColumn("gender", "Gender"),
   createSortableColumn("culture", "Culture"),
