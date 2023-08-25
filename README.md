@@ -1,17 +1,3 @@
-- [x] Task 1: Create a ReactJS application that fetches data from the [https://anapioficeandfire.com/](https://anapioficeandfire.com/) API.
-
-- [x] Task 2: Display the fetched character data in a table format.
-- [x] Task 3: Implement pagination to display a maximum of 10 characters per page.
-- [ ] Task 4: Implement text filtering to search for characters based on different columns (e.g., name, gender, culture, etc.).
-- [x] Task 5: Implement sorting functionality to allow sorting of characters based on different columns (e.g., name, gender, culture, etc.).
-- [x] Task 6: Minimize API requests by caching the fetched data and avoid prefetching when navigating back.
-- [x] Task 7: Use the [https://agify.io](https://agify.io) API to guess the age of characters based on their first names.
-- [x] Task 8: Style the components using a CSS framework of your choice.
-- [x] Task 9: Ensure the application is well-documented, including a README file with instructions on how to set up and run the project.
-- [x] Task 10: Make sure the application is production-ready and well-documented.
-- [x] Task 11: Create a private repository in your GitHub account and commit the code for each part of the exercise.
-- [ ] Task 12: Send us the link to the repository for review.
-
 # Wiki of GOT Persona
 
 Welcome to the Wiki of Game of Thrones (GOT) Persona! This application is built using [React](https://react.dev/), [Typescript](https://www.typescriptlang.org/), [Tailwind CSS](https://tailwindcss.com/), and the [TanStack](https://tanstack.com/table/v8) library for tables. Explore the rich world of Game of Thrones characters with ease and style.
