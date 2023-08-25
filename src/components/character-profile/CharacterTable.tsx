@@ -11,31 +11,36 @@ const NAMES_BATCH_SIZE = 10;
 const apiCache: Record<number, Character[]> = {};
 const ageCache: Record<string, number | null> = {};
 
+function getFirstNames(nameList: Character[]): string[] {
+  return nameList.map((item: Character) => item.name.split(" ")[0]);
+}
+
+function batchNamesList(namesList: string[]): string[][] {
+  const nameBatches = [];
+  for (let i = 0; i < namesList.length; i += NAMES_BATCH_SIZE) {
+    nameBatches.push(namesList.slice(i, i + NAMES_BATCH_SIZE));
+  }
+  return nameBatches;
+}
+
+async function fetchAgeDataForBatch(batch: string[]): Promise<void> {
+  const ages = await batchGuessAgeByNames(batch);
+  for (let i = 0; i < batch.length; i++) {
+    ageCache[batch[i]] = ages[i];
+  }
+}
+
 async function fetchCharacterData(page: number, pageSize: number) {
   if (apiCache[page]) {
     return apiCache[page];
   } else {
     const response = await fetchCharacters(page, pageSize);
     const dataWithNames = response.filter((item: Character) => item.name);
-    console.log(dataWithNames);
 
-    const namesList = dataWithNames.map(
-      (item: Character) => item.name.split(" ")[0]
-    );
+    const namesList = getFirstNames(dataWithNames);
+    const nameBatches = batchNamesList(namesList);
 
-    const namesBatches = [];
-    for (let i = 0; i < namesList.length; i += NAMES_BATCH_SIZE) {
-      namesBatches.push(namesList.slice(i, i + NAMES_BATCH_SIZE));
-    }
-
-    const agePromises = namesBatches.map(async (batch) => {
-      const ages = await batchGuessAgeByNames(batch);
-      for (let i = 0; i < batch.length; i++) {
-        ageCache[batch[i]] = ages[i];
-      }
-    });
-
-    await Promise.all(agePromises);
+    await Promise.all(nameBatches.map(fetchAgeDataForBatch));
 
     const charactersWithAge = dataWithNames.map((item: Character) => ({
       ...item,
@@ -73,7 +78,7 @@ function CharacterTable() {
   }, [currentPage]);
 
   return (
-    <div className="container mx-auto py-10">
+    <div className="container mx-auto py-6">
       {loading ? (
         <Spinner />
       ) : (
