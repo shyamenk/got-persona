@@ -22,8 +22,10 @@ The Wiki of GOT Persona is an interactive web application that provides a compre
 - **Table Component**: The TanStack library is used to create powerful and customizable tables for displaying character information.
 - **Character Details**: Access detailed information about each character, including their name, gender, culture, and more.
 - **Pagination**: Navigate through the characters conveniently with pagination, displaying 10 characters per page.
-- **Filtering**: Easily search for characters based on different attributes using the built-in text filter.
+- **Filtering**: Easily search for characters based on different attributes such as name.gender, culture, and more.
+
 - **Sorting**: Sort characters based on various attributes such as name, gender, culture, and more.
+
 - **Age Estimation**: The application leverages the Agify API to provide estimated ages for characters based on their first names.
 
 ## Technologies Used
@@ -38,17 +40,17 @@ The Wiki of GOT Persona is an interactive web application that provides a compre
 ## Installation
 
 1. Clone the repository:
-   ```shell
+   ```ts
    git clone https://github.com/shyamenk/got-persona.git
    ```
    ‌
 2. Navigate to the project directory:
-   ```shell
+   ```ts
    cd got-persona
    ```
    ‌
 3. Install the dependencies:
-   ```shell
+   ```ts
    npm install
    ```
 

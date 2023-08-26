@@ -9,10 +9,10 @@ import {
   getSortedRowModel,
   useReactTable,
 } from "@tanstack/react-table";
+import { Input } from "components/ui/input";
 import * as React from "react";
 import { Dispatch, SetStateAction } from "react";
 import { Button } from "../ui/button";
-import { Input } from "../ui/input";
 import {
   Table,
   TableBody,
@@ -36,6 +36,7 @@ export function DataTable<TData, TValue>({
   currentPage,
 }: DataTableProps<TData, TValue>) {
   const [sorting, setSorting] = React.useState<SortingState>([]);
+  const [globalFilter, setGlobalFilter] = React.useState("");
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
     []
   );
@@ -49,9 +50,11 @@ export function DataTable<TData, TValue>({
     getSortedRowModel: getSortedRowModel(),
     onColumnFiltersChange: setColumnFilters,
     getFilteredRowModel: getFilteredRowModel(),
+    onGlobalFilterChange: setGlobalFilter,
     state: {
       sorting,
       columnFilters,
+      globalFilter,
     },
   });
 
@@ -65,15 +68,16 @@ export function DataTable<TData, TValue>({
     setCurrentPage(currentPage + 1);
   };
 
+  console.log(globalFilter);
+
   return (
     <>
       <div className="flex items-center py-4">
         <Input
-          placeholder="Search name.."
-          value={(table.getColumn("name")?.getFilterValue() as string) ?? ""}
-          onChange={(event) =>
-            table.getColumn("name")?.setFilterValue(event.target.value)
-          }
+          value={globalFilter ?? ""}
+          onChange={(event) => setGlobalFilter(event.target.value)}
+          className="p-2 font-lg shadow border border-block"
+          placeholder="Search all columns..."
         />
       </div>
       <div className="rounded-md border">
