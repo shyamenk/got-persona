@@ -13,6 +13,9 @@ export type Character = {
   age: number | null;
 };
 
+const isColumnForFiltering = (key: string): boolean => {
+  return key === "name" || key === "culture";
+};
 const createSortableColumn = (
   accessorKey: keyof Character,
   label: string
@@ -28,6 +31,8 @@ const createSortableColumn = (
         <ArrowUpDown className="ml-2 h-4 w-4" />
       </Button>
     ),
+
+    enableGlobalFilter: isColumnForFiltering(accessorKey),
   };
 };
 
