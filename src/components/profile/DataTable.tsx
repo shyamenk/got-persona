@@ -1,6 +1,5 @@
 import {
   ColumnDef,
-  ColumnFiltersState,
   SortingState,
   flexRender,
   getCoreRowModel,
@@ -37,9 +36,9 @@ export function DataTable<TData, TValue>({
 }: DataTableProps<TData, TValue>) {
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [globalFilter, setGlobalFilter] = React.useState("");
-  const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
-    []
-  );
+  // const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
+  //   []
+  // );
   const table = useReactTable({
     data,
     columns,
@@ -48,12 +47,11 @@ export function DataTable<TData, TValue>({
     getPaginationRowModel: getPaginationRowModel(),
     onSortingChange: setSorting,
     getSortedRowModel: getSortedRowModel(),
-    onColumnFiltersChange: setColumnFilters,
+    // onColumnFiltersChange: setColumnFilters,
     getFilteredRowModel: getFilteredRowModel(),
     onGlobalFilterChange: setGlobalFilter,
     state: {
       sorting,
-      columnFilters,
       globalFilter,
     },
   });
@@ -68,16 +66,14 @@ export function DataTable<TData, TValue>({
     setCurrentPage(currentPage + 1);
   };
 
-  console.log(globalFilter);
-
   return (
     <>
       <div className="flex items-center py-4">
         <Input
           value={globalFilter ?? ""}
           onChange={(event) => setGlobalFilter(event.target.value)}
-          className="p-2 font-lg shadow border border-block"
-          placeholder="Search all columns..."
+          // className="p-2 font-lg shadow border border-block"
+          placeholder="Search by Name, Gender, Culture, Born, Died, or Age..."
         />
       </div>
       <div className="rounded-md border">
